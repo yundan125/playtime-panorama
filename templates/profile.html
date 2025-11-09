@@ -1095,90 +1095,182 @@
 			renderGames(games);
 		};
 
-		if (!submittedIdentifier) {
-			showError({
-				title: 'Steam profile required',
-				body: 'Add a SteamID or vanity username to the URL (e.g. /76561198000000000 or /obviyus) to view your collage.',
-				hint: API_LIMIT_HINT,
-				actions: [createApiKeyHelpAction()],
-			});
-		} else {
-			try {
-				showLoader();
-				const lookupIdentifier = submittedIdentifier;
-				const url = buildApiUrl(`${API_ENDPOINT_BASE}${encodeURIComponent(lookupIdentifier)}`);
+        if (!submittedIdentifier) {
+            showError({
+                title: 'Steam profile required',
+                body: 'Add a SteamID or vanity username to the URL (e.g. /76561198000000000 or /obviyus) to view your collage.',
+                hint: API_LIMIT_HINT,
+                actions: [createApiKeyHelpAction()],
+            });
+        } else {
+            try {
+                showLoader();
 
-				const response = await fetch(url, {
-					headers: {
-						Accept: 'application/json',
-					},
-				});
+                // --- 开始修改 ---
 
-				if (!response.ok) {
-					const errorBody = await response.json().catch(() => ({}));
-					const clientError = new Error(
-						typeof errorBody?.error === 'string'
-							? errorBody.error
-							: 'Failed to load playtime data.',
-					);
-					Object.assign(clientError, {
-						status: response.status,
-					});
-					throw clientError;
-				}
+                // 1. 按逗号拆分标识符
+                const identifiers = submittedIdentifier.split(',')
+                    .map(s => s.trim())
+                    .filter(Boolean);
 
-				const payload = await response.json();
-				applyPlaytimePayload(payload);
-			} catch (error) {
-				console.error(error);
-				const status =
-					typeof error === 'object' && error !== null && 'status' in error
-						? Number(error.status)
-						: null;
-				const errorMessage = error instanceof Error ? error.message : '';
-				const normalizedMessage = errorMessage.toLowerCase();
-				let errorConfig = {
-					title: 'Unable to load playtime data',
-					body: "We couldn't load the playtime data.",
-					hint: "If this is your profile, make sure your Steam Game Details privacy is set to Public and try again. " + API_LIMIT_HINT,
-					actions: [createApiKeyHelpAction()],
-				};
+                if (identifiers.length === 0) {
+                    throw new Error("No valid identifiers provided.");
+                }
 
-				if (status === 404) {
-					errorConfig = {
-						title: 'Profile not found',
-						body: "We couldn't find a Steam profile with that identifier.",
-						hint: 'Use the ID from your profile URL (steamcommunity.com/id/... or /profiles/...) or the full steamID64.',
-						actions: [
-							{
-								label: 'Open steamid.io',
-								href: 'https://steamid.io/lookup',
-								external: true,
-							},
-						],
-					};
-				} else if (status === 403 || normalizedMessage.includes('403')) {
-					errorConfig = {
-						title: 'Profile is private',
-						body: 'This Steam profile keeps its game details private.',
-						hint: 'Update privacy settings to Public and try again. ' + API_LIMIT_HINT,
-						actions: [createApiKeyHelpAction()],
-					};
-				} else if (
-					errorMessage &&
-					!normalizedMessage.includes('failed to load playtime data') &&
-					!normalizedMessage.includes('unable to fetch playtime data')
-				) {
-					errorConfig = {
-						title: 'Unable to load playtime data',
-						body: errorMessage,
-						hint: API_LIMIT_HINT,
-						actions: [createApiKeyHelpAction()],
-					};
-				}
+                // 2. 并行获取所有账户的数据
+                const results = await Promise.allSettled(
+                    identifiers.map(async (id) => {
+                        const url = buildApiUrl(`${API_ENDPOINT_BASE}${encodeURIComponent(id)}`);
+                        const response = await fetch(url, {
+                            headers: {
+                                Accept: 'application/json',
+                            },
+                        });
 
-				showError(errorConfig);
-			}
+                        if (!response.ok) {
+                            const errorBody = await response.json().catch(() => ({}));
+                            const clientError = new Error(
+                                typeof errorBody?.error === 'string'
+                                    ? errorBody.error
+                                    : 'Failed to load playtime data.',
+                            );
+                            Object.assign(clientError, {
+                                status: response.status,
+                                identifier: id // 记录是哪个 ID 失败了
+                            });
+                            throw clientError;
+                        }
+                        return await response.json();
+                    })
+                );
+
+                const allPayloads = [];
+                const errors = [];
+                results.forEach(result => {
+                    if (result.status === 'fulfilled') {
+                        allPayloads.push(result.value);
+                    } else {
+                        errors.push(result.reason);
+                    }
+                });
+
+                // 如果所有请求都失败了，抛出第一个错误
+                if (allPayloads.length === 0 && errors.length > 0) {
+                    throw errors[0];
+                }
+
+                // 如果有部分失败，在控制台警告，但继续处理成功的部分
+                if (errors.length > 0) {
+                    console.warn("Some profiles failed to load:", errors.map(e => `${e.identifier}: ${e.message}`).join(', '));
+                }
+
+                // 3. 定义合并 Payloads 的函数（核心逻辑）
+                const mergePayloads = (payloads) => {
+                    const gameMap = new Map(); // K: appid, V: game object
+                    let combinedSteamID = [];
+                    let combinedResolvedFrom = [];
+
+                    for (const payload of payloads) {
+                        if (!payload || !Array.isArray(payload.games)) continue;
+
+                        // 组合元数据
+                        if (payload.steamID) combinedSteamID.push(payload.steamID);
+                        if (payload.resolvedFrom) combinedResolvedFrom.push(payload.resolvedFrom);
+                        else if (payload.steamID) combinedResolvedFrom.push(payload.steamID);
+
+                        // 遍历游戏列表
+                        for (const game of payload.games) {
+                            const appid = game.appid;
+                            if (!appid) continue;
+
+                            const minutes = Number(game.playtime_forever || 0);
+
+                            if (gameMap.has(appid)) {
+                                // 如果游戏已存在，累加时间
+                                const existing = gameMap.get(appid);
+                                existing.playtime_forever += minutes;
+                                // 保留最近一次游玩的时间戳
+                                if ((game.rtime_last_played || 0) > (existing.rtime_last_played || 0)) {
+                                    existing.rtime_last_played = game.rtime_last_played;
+                                }
+                            } else {
+                                // 如果是新游戏，复制并添加到 Map
+                                const newGame = { ...game };
+                                newGame.playtime_forever = minutes; // 确保是数字
+                                gameMap.set(appid, newGame);
+                            }
+                        }
+                    }
+
+                    const mergedGames = Array.from(gameMap.values());
+
+                    // 返回一个与
+                    return {
+                        game_count: mergedGames.length,
+                        games: mergedGames,
+                        steamID: combinedSteamID.join(', '), // 用于调试或标题
+                        resolvedFrom: combinedResolvedFrom.join(', '), // 用于标题
+                    };
+                };
+
+                // 4. 合并所有成功获取的 payload
+                const payload = mergePayloads(allPayloads);
+
+                // --- 结束修改 ---
+
+                // 5. 将合并后的 payload 传递给渲染函数
+                applyPlaytimePayload(payload);
+
+            } catch (error) {
+                console.error(error);
+                const status =
+                    typeof error === 'object' && error !== null && 'status' in error
+                        ? Number(error.status)
+                        : null;
+                const errorMessage = error instanceof Error ? error.message : '';
+                const normalizedMessage = errorMessage.toLowerCase();
+                let errorConfig = {
+                    title: 'Unable to load playtime data',
+                    body: "We couldn't load the playtime data.",
+                    hint: "If this is your profile, make sure your Steam Game Details privacy is set to Public and try again. " + API_LIMIT_HINT,
+                    actions: [createApiKeyHelpAction()],
+                };
+
+                if (status === 404) {
+                    errorConfig = {
+                        title: 'Profile not found',
+                        body: `We couldn't find a Steam profile (Identifier: ${error.identifier || ''}).`,
+                        hint: 'Use the ID from your profile URL (steamcommunity.com/id/... or /profiles/...) or the full steamID64.',
+                        actions: [
+                            {
+                                label: 'Open steamid.io',
+                                href: 'https://steamid.io/lookup',
+                                external: true,
+                            },
+                        ],
+                    };
+                } else if (status === 403 || normalizedMessage.includes('403')) {
+                    errorConfig = {
+                        title: 'Profile is private',
+                        body: `This Steam profile keeps its game details private (Identifier: ${error.identifier || ''}).`,
+                        hint: 'Update privacy settings to Public and try again. ' + API_LIMIT_HINT,
+                        actions: [createApiKeyHelpAction()],
+                    };
+                } else if (
+                    errorMessage &&
+                    !normalizedMessage.includes('failed to load playtime data') &&
+                    !normalizedMessage.includes('unable to fetch playtime data')
+                ) {
+                    errorConfig = {
+                        title: 'Unable to load playtime data',
+                        body: errorMessage,
+                        hint: API_LIMIT_HINT,
+                        actions: [createApiKeyHelpAction()],
+                    };
+                }
+
+                showError(errorConfig);
+            }
 		}
 	</script>
 </body>
