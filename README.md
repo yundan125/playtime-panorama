@@ -1,14 +1,18 @@
 添加了可以合并多个账户数据的功能
 
-1.原来的“set STEAM_API_KEY=替换成你的steam密钥”改为：
+使用方法（以三个号为例）：
 
-set STEAM_API_KEYS = "steam密钥,steam密钥,steam密钥"      
+1.下载环境，终端管理员运行powershell -c "irm bun.sh/install.ps1 | iex"
 
-steam密钥可以相同，因为API 密钥（Key）和 Steam 账户（Account）是完全分离的。Steam 账户 ID (7656...)： 这是想查看的“房间号”。而API 密钥 (8FB3...)： 用来打开 Steam API 大门的“万能钥匙”。
+2.访问 https://steamcommunity.com/dev/apikey  获到你的api密钥
 
-2.最后的“访问地址https://localhost:3000/你的steamId”改为：
+3.从 https://github.com/yundan125/playtime-panorama 下载项目并给我一个star
 
-http://localhost:3000/steamId1,steamId2,steamId3
+4.解压下载好的项目，打开文件夹，在此文件夹打开cmd
+
+5.运行命令bun install运行完成后，再运行set STEAM_API_KEYS = "steam密钥,steam密钥,steam密钥"（有几个号就输入几次，然这几个steam秘钥可以相同也尽量相同，复制粘贴同一个就可以） ，执行完后接着执行bun run dev
+
+6.访问地址http://localhost:3000/steamId1,steamId2,steamId3 （有几个号就填几个id，填不一样的，一般都是7656xxxxxxxxxxxxx）
 
 
 # playtime-panorama
