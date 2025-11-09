@@ -2,7 +2,9 @@
 
 1.原来的“set STEAM_API_KEY=替换成你的steam密钥”改为：
 
-set STEAM_API_KEYS = "steam密钥,steam密钥,steam密钥"      steam密钥可以相同，因为API 密钥（Key）和 Steam 账户（Account）是完全分离的。Steam 账户 ID (7656...)： 这是想查看的“房间号”。而API 密钥 (8FB3...)： 用来打开 Steam API 大门的“万能钥匙”。
+set STEAM_API_KEYS = "steam密钥,steam密钥,steam密钥"      
+
+steam密钥可以相同，因为API 密钥（Key）和 Steam 账户（Account）是完全分离的。Steam 账户 ID (7656...)： 这是想查看的“房间号”。而API 密钥 (8FB3...)： 用来打开 Steam API 大门的“万能钥匙”。
 
 2.最后的“访问地址https://localhost:3000/你的steamId”改为：
 
