@@ -87,6 +87,11 @@ a:hover { color: var(--color-accent-hover); }
 .eyebrow { color: var(--color-accent-hover); }
 .hero h1, .page-hero h1, h1, h2, h3 { color: var(--color-text); }
 .hero-lead, .section-heading p, .field-hint, .fine-print, .result-subtitle, .stat-label, .status-line, .download-message { color: var(--color-text-muted); }
+.hero-grid > * { min-width: 0; }
+.hero-lead, .sample-caption { overflow-wrap: anywhere; }
+.sample-mosaic { width: 100%; max-width: 100%; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.sample-tile { min-width: 0; }
+.sample-tile span { max-width: 100%; line-height: 1.3; overflow-wrap: anywhere; }
 .query-card, .panel, .content-card, .stat-card, .feature, .step, .faq-item, .table-panel { background: var(--color-surface); border-color: var(--color-border); border-radius: var(--radius-medium); box-shadow: var(--shadow-small); }
 .field textarea, .field input { border-color: var(--color-border); background: var(--color-surface); color: var(--color-text); border-radius: var(--radius-small); }
 .field input:focus, .field textarea:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(36, 93, 168, .14); }
