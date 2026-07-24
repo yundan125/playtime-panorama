@@ -5,16 +5,39 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>站点排行榜 · Steam 游玩时光全景图</title>
   <meta name="description" content="查看 Cloudflare D1 缓存生成的 Steam 游玩数据排行榜。">
-  <link rel="icon" href="/favicon.svg">
-  <link rel="stylesheet" href="/assets/site.css">
-</head>
+  <meta name="theme-color" content="#f7f9fc"><link rel="icon" href="/favicon.svg">
+  <link rel="manifest" href="/site.webmanifest"><link rel="stylesheet" href="/assets/site.css">
+<link rel="canonical" href="https://playtime.269332.xyz/leaderboard"><meta property="og:url" content="https://playtime.269332.xyz/leaderboard"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:site_name" content="CloudLight"><meta property="og:title" content="站点排行榜 · Steam 游玩时光全景图"><meta property="og:description" content="查看 Cloudflare D1 缓存生成的 Steam 游玩数据排行榜。"><meta property="og:image" content="https://playtime.269332.xyz/site-social.svg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="站点排行榜 · Steam 游玩时光全景图"><meta name="twitter:description" content="查看 Cloudflare D1 缓存生成的 Steam 游玩数据排行榜。"><meta name="twitter:image" content="https://playtime.269332.xyz/site-social.svg"></head>
 <body>
   <a class="skip-link" href="#main">跳到主要内容</a>
-  <header class="site-header"><div class="container nav-wrap">
-    <a class="brand" href="/"><span class="brand-mark"></span><span>Steam 游玩时光全景图</span></a>
-    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="打开导航菜单"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-    <nav class="nav-links" id="site-nav" data-nav-links><a href="/">首页</a><a href="/guide">使用教程</a><a href="/faq">常见问题</a><a href="/leaderboard" aria-current="page">排行榜</a><a class="github-link" href="https://github.com/yundan125/playtime-panorama" target="_blank" rel="noopener noreferrer">GitHub 项目</a></nav>
-  </div></header>
+  <header class="site-header">
+  <nav class="global-nav container" aria-label="主站导航">
+    <a class="site-brand" href="https://269332.xyz/" aria-label="CloudLight 首页">CloudLight</a>
+    <div class="site-links">
+      <a href="https://269332.xyz/">首页</a>
+      <a href="https://269332.xyz/tools/" aria-current="page">游戏工具箱</a>
+      <a href="https://269332.xyz/projects/">项目</a>
+      <a href="https://269332.xyz/about/">关于</a>
+    </div>
+    <a class="site-github" href="https://github.com/yundan125" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span><span class="sr-only">（在新窗口打开）</span></a>
+  </nav>
+  <div class="tool-nav">
+    <div class="container nav-wrap">
+      <a class="tool-brand" href="/">
+        <span class="tool-brand-kicker">游戏工具箱</span>
+        <span>Steam 游玩时光全景图</span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="打开工具导航菜单"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <nav class="nav-links" id="site-nav" data-nav-links aria-label="工具导航">
+        <a href="/">首页</a>
+        <a href="/guide">使用教程</a>
+        <a href="/faq">常见问题</a>
+        <a href="/leaderboard" aria-current="page">排行榜</a>
+        <a class="github-link" href="https://github.com/yundan125/playtime-panorama" target="_blank" rel="noopener noreferrer">GitHub 项目<span class="sr-only">（在新窗口打开）</span></a>
+      </nav>
+    </div>
+  </div>
+</header>
   <main id="main">
     <section class="page-hero"><div class="container">
       <p class="eyebrow">来自 Cloudflare D1 缓存</p>
@@ -36,7 +59,32 @@
       <p class="fine-print" style="margin-top:1rem">数据快照生成时间：<span id="generated-at">—</span>。游戏数据缓存有效期为 24 小时，排行榜接口快照最多缓存 5 分钟。</p>
     </section>
   </main>
-  <footer class="site-footer"><div class="container footer-wrap"><span>排行榜为空？先生成一次公开账号的全景图。</span><div class="footer-links"><a href="/">开始生成</a><a href="/faq">数据说明</a></div></div></footer>
+  <footer class="site-footer">
+  <div class="footer-inner container">
+    <div class="footer-brand">
+      <a href="https://269332.xyz/">CloudLight</a>
+      <p>游戏工具箱 · Steam 游玩时光全景图</p>
+    </div>
+    <nav class="footer-nav" aria-label="页脚主站导航">
+      <p>主站导航</p>
+      <a href="https://269332.xyz/">首页</a>
+      <a href="https://269332.xyz/tools/">游戏工具箱</a>
+      <a href="https://269332.xyz/projects/">项目</a>
+      <a href="https://269332.xyz/about/">关于</a>
+    </nav>
+    <div class="footer-links">
+      <p>工具信息</p>
+      <a href="/guide">使用教程</a>
+      <a href="/faq">常见问题</a>
+      <a href="https://github.com/yundan125/playtime-panorama" target="_blank" rel="noopener noreferrer">查看源码<span class="sr-only">（在新窗口打开）</span></a>
+      <span>PNG 在浏览器本地生成</span>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <p>© 2026 CloudLight</p>
+    <p>独立游戏数据工具 · 与 Valve Corporation 无官方关联</p>
+  </div>
+</footer>
   <script src="/assets/site.js" defer></script>
   <script src="/assets/leaderboard.js" defer></script>
 </body>

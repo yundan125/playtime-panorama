@@ -4,6 +4,10 @@
 
 当前主部署架构为 Cloudflare Workers + Static Assets + D1，原 Bun 全栈版本仍作为本地备用。仓库不会保存 Steam API Key；线上 Key 必须使用 Cloudflare Secret。
 
+## 在线访问
+
+正式站点：<https://playtime.269332.xyz/>。该工具属于 [CloudLight 游戏工具箱](https://269332.xyz/tools/)。
+
 ## 功能列表
 
 - 支持 SteamID64、自定义用户名和完整 Steam 个人资料网址。
@@ -89,7 +93,7 @@ bun run build:bun
 bun run start:bun
 ```
 
-然后访问 <http://localhost:3001>。生产模式同样支持 `PORT`。
+然后访问终端中显示的本地地址。生产模式同样支持 `PORT`。
 
 ## 单账号使用方法
 

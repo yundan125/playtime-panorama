@@ -1,1 +1,53 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>生成全景图 · Steam 游玩时光全景图</title><meta name="description" content="查看按 Steam 游玩时长生成的游戏封面全景图。"><meta name="theme-color" content="#0b1118"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/site.css"><link rel="preconnect" href="https://cdn.steamstatic.com" crossorigin></head><body><a class="skip-link" href="#main">跳到主要内容</a><header class="site-header"><div class="container nav-wrap"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span><span>Steam 游玩时光全景图</span></a><button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="打开导航菜单"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><nav class="nav-links" id="site-nav" data-nav-links><a href="/">首页</a><a href="/guide">使用教程</a><a href="/faq">常见问题</a><a href="/leaderboard">排行榜</a><a class="github-link" href="https://github.com/yundan125/playtime-panorama" target="_blank" rel="noopener noreferrer">GitHub 项目</a></nav></div></header><main class="result-main" id="main"><div class="container"><div class="result-head"><div><p class="eyebrow">生成结果</p><h1 id="result-title">正在准备全景图</h1><p class="result-subtitle" id="result-subtitle">正在核对账号并读取公开游戏数据。</p></div><div class="result-actions"><a class="button secondary" href="/">返回首页</a><a class="button ghost" href="/">重新生成</a></div></div><section class="stats-grid" aria-label="游玩统计"><div class="stat-card"><span class="stat-label">成功账号</span><strong class="stat-value" id="stat-accounts">—</strong></div><div class="stat-card"><span class="stat-label">游戏数量</span><strong class="stat-value" id="stat-games">—</strong></div><div class="stat-card"><span class="stat-label">总游玩时间</span><strong class="stat-value" id="stat-total">—</strong></div><div class="stat-card"><span class="stat-label">平均每款游戏</span><strong class="stat-value" id="stat-average">—</strong></div></section><div class="stat-card" style="margin-bottom:1rem"><span class="stat-label">游玩时间最长</span><strong class="stat-value" id="stat-top">—</strong></div><section class="account-status" id="account-status" aria-label="账号读取状态"></section><section class="mosaic-shell" id="mosaic-shell" aria-label="游戏封面全景图"><div class="loading-overlay" id="loading-overlay" role="status" aria-live="polite"></div><div class="games-grid" id="games"></div></section><div class="result-actions" style="justify-content:flex-end;margin-top:1rem"><button class="button" id="download-button" type="button" disabled>等待封面加载…</button></div><p class="download-message" id="download-message" role="alert"></p></div></main><footer class="site-footer"><div class="container footer-wrap"><span>图片在当前浏览器中生成，不会上传到图片服务器。</span><div class="footer-links"><a href="/guide#download">下载帮助</a><a href="/faq">常见问题</a></div></div></footer><script src="/assets/site.js" defer></script><script src="/assets/profile.js" type="module"></script></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>生成全景图 · Steam 游玩时光全景图</title><meta name="description" content="查看按 Steam 游玩时长生成的游戏封面全景图。"><meta name="theme-color" content="#f7f9fc"><link rel="icon" href="/favicon.svg"><link rel="manifest" href="/site.webmanifest"><link rel="stylesheet" href="/assets/site.css"><link rel="preconnect" href="https://cdn.steamstatic.com" crossorigin><meta name="robots" content="noindex,follow"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:site_name" content="CloudLight"><meta property="og:title" content="生成全景图 · Steam 游玩时光全景图"><meta property="og:description" content="查看按 Steam 游玩时长生成的游戏封面全景图。"><meta property="og:image" content="https://playtime.269332.xyz/site-social.svg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="生成全景图 · Steam 游玩时光全景图"><meta name="twitter:description" content="查看按 Steam 游玩时长生成的游戏封面全景图。"><meta name="twitter:image" content="https://playtime.269332.xyz/site-social.svg"></head><body><a class="skip-link" href="#main">跳到主要内容</a><header class="site-header">
+  <nav class="global-nav container" aria-label="主站导航">
+    <a class="site-brand" href="https://269332.xyz/" aria-label="CloudLight 首页">CloudLight</a>
+    <div class="site-links">
+      <a href="https://269332.xyz/">首页</a>
+      <a href="https://269332.xyz/tools/" aria-current="page">游戏工具箱</a>
+      <a href="https://269332.xyz/projects/">项目</a>
+      <a href="https://269332.xyz/about/">关于</a>
+    </div>
+    <a class="site-github" href="https://github.com/yundan125" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span><span class="sr-only">（在新窗口打开）</span></a>
+  </nav>
+  <div class="tool-nav">
+    <div class="container nav-wrap">
+      <a class="tool-brand" href="/">
+        <span class="tool-brand-kicker">游戏工具箱</span>
+        <span>Steam 游玩时光全景图</span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="site-nav" aria-label="打开工具导航菜单"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <nav class="nav-links" id="site-nav" data-nav-links aria-label="工具导航">
+        <a href="/">首页</a>
+        <a href="/guide">使用教程</a>
+        <a href="/faq">常见问题</a>
+        <a href="/leaderboard">排行榜</a>
+        <a class="github-link" href="https://github.com/yundan125/playtime-panorama" target="_blank" rel="noopener noreferrer">GitHub 项目<span class="sr-only">（在新窗口打开）</span></a>
+      </nav>
+    </div>
+  </div>
+</header><main class="result-main" id="main"><div class="container"><div class="result-head"><div><p class="eyebrow">生成结果</p><h1 id="result-title">正在准备全景图</h1><p class="result-subtitle" id="result-subtitle">正在核对账号并读取公开游戏数据。</p></div><div class="result-actions"><a class="button secondary" href="/">返回首页</a><a class="button ghost" href="/">重新生成</a></div></div><section class="stats-grid" aria-label="游玩统计"><div class="stat-card"><span class="stat-label">成功账号</span><strong class="stat-value" id="stat-accounts">—</strong></div><div class="stat-card"><span class="stat-label">游戏数量</span><strong class="stat-value" id="stat-games">—</strong></div><div class="stat-card"><span class="stat-label">总游玩时间</span><strong class="stat-value" id="stat-total">—</strong></div><div class="stat-card"><span class="stat-label">平均每款游戏</span><strong class="stat-value" id="stat-average">—</strong></div></section><div class="stat-card" style="margin-bottom:1rem"><span class="stat-label">游玩时间最长</span><strong class="stat-value" id="stat-top">—</strong></div><section class="account-status" id="account-status" aria-label="账号读取状态"></section><section class="mosaic-shell" id="mosaic-shell" aria-label="游戏封面全景图"><div class="loading-overlay" id="loading-overlay" role="status" aria-live="polite"></div><div class="games-grid" id="games"></div></section><div class="result-actions" style="justify-content:flex-end;margin-top:1rem"><button class="button" id="download-button" type="button" disabled>等待封面加载…</button></div><p class="download-message" id="download-message" role="alert"></p></div></main><footer class="site-footer">
+  <div class="footer-inner container">
+    <div class="footer-brand">
+      <a href="https://269332.xyz/">CloudLight</a>
+      <p>游戏工具箱 · Steam 游玩时光全景图</p>
+    </div>
+    <nav class="footer-nav" aria-label="页脚主站导航">
+      <p>主站导航</p>
+      <a href="https://269332.xyz/">首页</a>
+      <a href="https://269332.xyz/tools/">游戏工具箱</a>
+      <a href="https://269332.xyz/projects/">项目</a>
+      <a href="https://269332.xyz/about/">关于</a>
+    </nav>
+    <div class="footer-links">
+      <p>工具信息</p>
+      <a href="/guide">使用教程</a>
+      <a href="/faq">常见问题</a>
+      <a href="https://github.com/yundan125/playtime-panorama" target="_blank" rel="noopener noreferrer">查看源码<span class="sr-only">（在新窗口打开）</span></a>
+      <span>PNG 在浏览器本地生成</span>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <p>© 2026 CloudLight</p>
+    <p>独立游戏数据工具 · 与 Valve Corporation 无官方关联</p>
+  </div>
+</footer><script src="/assets/site.js" defer></script><script src="/assets/profile.js" type="module"></script></body></html>

@@ -192,4 +192,4 @@ const server = Bun.serve({
 	},
 });
 
-console.log(`Steam 游玩时光全景图已启动：\nhttp://localhost:${server.port}`);
+console.log(`Steam 游玩时光全景图本地服务已启动，端口：${server.port}`);
