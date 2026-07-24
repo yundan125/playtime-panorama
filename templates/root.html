@@ -45,60 +45,73 @@
     <main id="main">
         <section class="hero">
             <div class="container hero-grid">
-                <div>
+                <div class="hero-copy">
                     <p class="eyebrow">你的游戏时间，另一种观看方式</p>
                     <h1>Steam 游玩<br>时光全景图</h1>
                     <p class="hero-lead">根据一个或多个 Steam 账号的游戏时长，生成一张独一无二的游戏封面全景图。添加多个账号时，相同游戏的游玩时长会自动累计；玩得越久，封面越醒目。
 </p>
-                    <div class="sample-mosaic" aria-label="示例全景图">
-                        <div class="sample-tile"><span>长期最爱 · 860 小时</span></div>
-                        <div class="sample-tile"><span>常玩游戏 · 320 小时</span></div>
-                        <div class="sample-tile"><span>近期投入 · 108 小时</span></div>
-                        <div class="sample-tile"><span>42 小时</span></div>
-                        <div class="sample-tile"><span>18 小时</span></div>
-                    </div>
-                    <p class="sample-caption">示意效果：同一张图里，游戏封面面积会随累计游玩时间变化。</p>
                 </div>
-                <form id="steam-form" class="query-card" novalidate>
-                    <div class="field">
-                        <label for="steam-accounts">Steam 账号</label>
+                <form id="steam-form" class="query-card" aria-labelledby="query-card-title" novalidate>
+                    <header class="query-card-header">
+                        <p class="query-card-eyebrow">从这里开始</p>
+                        <h2 id="query-card-title">输入 Steam 账号</h2>
+                        <p>粘贴一个或多个公开的 Steam 账号，生成专属的游玩时光全景图。</p>
+                        <ol class="query-steps" aria-label="生成全景图步骤">
+                            <li><span aria-hidden="true">1</span>输入账号</li>
+                            <li><span aria-hidden="true">2</span>生成全景图</li>
+                            <li><span aria-hidden="true">3</span>下载 PNG</li>
+                        </ol>
+                    </header>
+                    <div class="field query-field">
+                        <label for="steam-accounts">Steam 账号或资料链接</label>
 
-                        <textarea id="steam-accounts" name="steam-accounts" placeholder="示例：
+                        <textarea id="steam-accounts" name="steam-accounts"
+                            aria-describedby="account-format-summary form-error" placeholder="示例：
 76561198000000001
 example_user
 https://steamcommunity.com/id/example_user
 https://steamcommunity.com/profiles/76561198000000002"></textarea>
 
-                        <div class="field-hint">
-                            <p>每个账号只需填写以下任意一种格式，无需同时填写多种：</p>
-                            <ul>
-                                <li>
-                                    <strong>SteamID64：</strong>
-                                    17 位数字，例如
-                                    <code>76561198000000001</code>
-                                </li>
-                                <li>
-                                    <strong>自定义用户名：</strong>
-                                    Steam 个人资料网址中 <code>/id/</code> 后面的内容，例如
-                                    <code>example_user</code>
-                                </li>
-                                <li>
-                                    <strong>完整个人资料网址：</strong>
-                                    例如
-                                    <code>https://steamcommunity.com/id/example_user</code>
-                                    或
-                                    <code>https://steamcommunity.com/profiles/76561198000000001</code>
-                                </li>
-                            </ul>
-
-                            <p>
-                                可一次填写多个账号，账号之间可使用换行、英文逗号、中文逗号、
-                                空格、英文分号或中文分号分隔，最多填写 10 个账号。
-                            </p>
+                        <p class="input-summary" id="account-format-summary">支持 SteamID64、自定义用户名或完整资料网址，可填写多个账号，最多 10 个。</p>
+                        <div class="format-tags" aria-label="支持的账号格式">
+                            <span>SteamID64</span>
+                            <span>自定义用户名</span>
+                            <span>资料网址</span>
                         </div>
+                        <details class="format-details">
+                            <summary>查看支持的输入格式</summary>
+                            <div class="format-details-body field-hint">
+                                <p>每个账号只需填写以下任意一种格式，无需同时填写多种：</p>
+                                <ul>
+                                    <li>
+                                        <strong>SteamID64：</strong>
+                                        17 位数字，例如
+                                        <code>76561198000000001</code>
+                                    </li>
+                                    <li>
+                                        <strong>自定义用户名：</strong>
+                                        Steam 个人资料网址中 <code>/id/</code> 后面的内容，例如
+                                        <code>example_user</code>
+                                    </li>
+                                    <li>
+                                        <strong>完整个人资料网址：</strong>
+                                        例如
+                                        <code>https://steamcommunity.com/id/example_user</code>
+                                        或
+                                        <code>https://steamcommunity.com/profiles/76561198000000001</code>
+                                    </li>
+                                </ul>
+
+                                <p>
+                                    可一次填写多个账号，账号之间可使用换行、英文逗号、中文逗号、
+                                    空格、英文分号或中文分号分隔，最多填写 10 个账号。
+                                </p>
+                            </div>
+                        </details>
+                        <p class="field-error" id="form-error" role="alert" aria-live="polite"></p>
                     </div>
                     <details class="api-details">
-                        <summary>Steam Web API Key</summary>
+                        <summary>高级选项：Steam Web API Key</summary>
                         <div class="api-inner">
                             <div class="field"><label for="api-key">你的 Steam Web API Key</label>
                                 <div class="password-row"><input id="api-key" type="password" autocomplete="off"
@@ -110,13 +123,25 @@ https://steamcommunity.com/profiles/76561198000000002"></textarea>
                                         rel="noopener noreferrer">申请 API Key</a></p>
                             </div>
                         </div>
-                    </details><button class="button query-submit" type="submit">生成我的全景图</button>
+                    </details>
+                    <p class="query-helper">通常只需填写 Steam 账号，无需填写 API Key。</p>
+                    <button class="button query-submit" type="submit">生成我的全景图</button>
                     <div class="privacy-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" aria-hidden="true">
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
                             <path d="m9 12 2 2 4-4" />
                         </svg><span>只读取 Steam 公开的游戏名称与游玩时间，不需要也不会读取 Steam 密码。个人资料、游戏详情和总游戏时间必须公开。</span></div>
                 </form>
+                <div class="hero-sample">
+                    <div class="sample-mosaic" aria-label="示例全景图">
+                        <div class="sample-tile"><span>长期最爱 · 860 小时</span></div>
+                        <div class="sample-tile"><span>常玩游戏 · 320 小时</span></div>
+                        <div class="sample-tile"><span>近期投入 · 108 小时</span></div>
+                        <div class="sample-tile"><span>42 小时</span></div>
+                        <div class="sample-tile"><span>18 小时</span></div>
+                    </div>
+                    <p class="sample-caption">示意效果：同一张图里，游戏封面面积会随累计游玩时间变化。</p>
+                </div>
             </div>
         </section>
         <section class="section alt">
