@@ -247,3 +247,5 @@ bun run dev
 - `/api/leaderboard`：D1 排行榜 JSON
 
 不再支持通过 `?api_key=...` 查询参数传递 Key，以避免 Key 出现在 URL、历史记录或访问日志中。
+
+<!-- Trigger Cloudflare Workers build -->
