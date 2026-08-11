@@ -8,6 +8,7 @@ RUN bun install --frozen-lockfile
 COPY tsconfig.json ./
 COPY server ./server
 COPY templates ./templates
+COPY public ./public
 
 RUN bun run build
 

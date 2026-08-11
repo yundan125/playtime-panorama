@@ -18,7 +18,7 @@ await Promise.all([
 	cp(template("faq.html"), destination("faq", "index.html")),
 	cp(template("leaderboard.html"), destination("leaderboard", "index.html")),
 	cp(resolve(root, "public", "assets"), destination("assets"), { recursive: true }),
-	cp(resolve(root, "public", "favicon.svg"), destination("favicon.svg")),
+	cp(resolve(root, "public", "favicon.png"), destination("favicon.png")),
 	cp(resolve(root, "public", "site-social.svg"), destination("site-social.svg")),
 	cp(resolve(root, "public", "site.webmanifest"), destination("site.webmanifest")),
 ]);

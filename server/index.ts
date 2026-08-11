@@ -159,7 +159,7 @@ const server = Bun.serve({
 		"/assets/home.js": { GET: () => staticFile("assets/home.js", "text/javascript; charset=utf-8") },
 		"/assets/profile.js": { GET: () => staticFile("assets/profile.js", "text/javascript; charset=utf-8") },
 		"/assets/leaderboard.js": { GET: () => staticFile("assets/leaderboard.js", "text/javascript; charset=utf-8") },
-		"/favicon.svg": { GET: () => staticFile("favicon.svg", "image/svg+xml") },
+		"/favicon.png": { GET: () => staticFile("favicon.png", "image/png") },
 		"/site.webmanifest": { GET: () => staticFile("site.webmanifest", "application/manifest+json") },
 		"/api/playtime": { POST: playtimePost },
 		"/api/playtime/:identifier": {

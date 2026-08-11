@@ -4,7 +4,7 @@ import type { Env, SteamGame } from "./types";
 
 const RESERVED_PATHS = new Set([
 	"api", "assets", "guide", "faq", "leaderboard", "profile",
-	"favicon.svg", "site.webmanifest", "robots.txt",
+	"favicon.png", "site.webmanifest", "robots.txt",
 ]);
 
 const jsonHeaders = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };

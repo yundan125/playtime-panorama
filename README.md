@@ -195,7 +195,7 @@ templates/
   leaderboard.html  # 排行榜
 public/
   assets/            # 共享样式和页面脚本
-  favicon.svg
+  favicon.png
   site.webmanifest
 ```
 
